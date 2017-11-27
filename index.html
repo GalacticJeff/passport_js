@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TestApp</title>
+    <style>
+        input{
+          margin-bottom: :5px;
+          display:block;
+        }
+    </style>
+  </head>
+  <body>
+    <form method="POST">
+      <input type="email" id="email" placeholder="email"/>
+      <input type="password" id="password" placeholder="Constrasena"/>
+      <input type="submit" id="login" value="ingresar"/>
+    </form>
+
+    <script>
+
+      (function(){
+        'use strict';
+
+        const clientId = "9";
+        const clientSecret = '1MrMC1ya9uoISoaul0Uqxn2Vl9RwxbcUiXcoh482';
+        const granType = 'password';
+
+        let login = document.getElementById('login');
+
+        login.addEventListener('click', e => {
+
+          e.preventDefault();
+
+          fetch('http://iguana.dns2go.com/oauth/token', {
+            method: 'POST',
+            body: JSON.stringify({
+              client_id: clientId,
+              client_secret: clientSecret,
+              grant_type: granType,
+              username: document.getElementById('email').value,
+              password: document.getElementById('password').value
+            }),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+          })
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            localStorage.setItem('token', data.access_token)
+          })
+        });
+
+      })();
+
+    </script>
+
+
+  </body>
+</html>

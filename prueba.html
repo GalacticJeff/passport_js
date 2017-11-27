@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Prueba</title>
+  </head>
+  <body>
+    <ul/>
+
+    <script>
+
+      (function (){
+          'use strict';
+          if(localStorage.getItem('token')){
+            fetch('http://iguana.dns2go.com/api/APIactivacion',{
+              method: 'GET',
+              headers: {'Authorization': 'Bearer' + localStorage.getItem('token')}
+            })
+            .then(response =>{
+              return response.json()
+            })
+            .then(data => {
+              let li = '';
+              data.forEach( (premio, index) => {
+                li += '<li>' + premio.primer_premio + '</li>';
+                li += '<li>' + premio.segundo_premio + '</li>';
+                li += '<li>' + premio.tercer_premio + '</li>';
+
+              })
+              document.querySelector('ul').innerHTML = li;
+            })
+          }
+      })();
+    </script>
+
+
+
+  </body>
+</html>
